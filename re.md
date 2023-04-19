@@ -1,0 +1,1 @@
+利用 https://github.com/kinoaa/gifmin.js 压缩gif
