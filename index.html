@@ -1,0 +1,41 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./test.js"></script>
+</head>
+
+<body>
+    <input type="file" multiple id='upload'>
+    <script>
+        const upload = document.getElementById('upload');
+        upload.addEventListener('change', function (e) {
+            console.log(e.target.files[0], '1')
+            const file = e.target.files[0]
+            if (window.FileReader) {
+                var fr = new FileReader()
+                fr.readAsArrayBuffer(file)
+                fr.onload = function (e) {
+                    var colors = 70 // 介于0~256之间数值越小压缩后文件越小
+                    // eslint-disable-next-line no-undef
+                    var result = gifmin(fr.result, colors) // 二进制文件流
+                    console.log(result)
+                    var obj = new Blob([result], { // 转换成Blob对象
+                        type: 'application/octet-stream'
+                    })
+                    const gifFile = new window.File([obj], file.name, { // 转换成file文件
+                        type: file.type
+                    })
+                    
+                    console.log(gifFile, window.URL.createObjectURL(obj), '9999')
+                   
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
